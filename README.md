@@ -24,7 +24,7 @@ Enter a url and use the result as a short link in your messages. Anyone who uses
 
 # Front end
 
-- GitHub repo : https://github.com/...
+- GitHub repo : https://github.com/robby3bergen/react-url-shortener
 - Server      : https://....
 - Library     : React.js
 
@@ -64,7 +64,7 @@ Enter a url and use the result as a short link in your messages. Anyone who uses
 
 # Backend
 
-- GitHub repo : https://github.com/...
+- GitHub repo : https://github.com/robby3bergen/express-url-shortener
 - Server      : https://...
 - Framework   : Express
 
