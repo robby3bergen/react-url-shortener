@@ -1,68 +1,130 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Project Name
+Url Shortener
 
-## Available Scripts
+## Description
+Enter a url and use the result as a short link in your messages. Anyone who uses the short link will be redirected to the original destination.
 
-In the project directory, you can run:
+## User Stories
 
-### `npm start`
+### Sprint 1
+- As a user I want to enter a destination url and receive a shortened url in return
+- As a user I want to be redirected to the destination url after visiting the shortened url
+- As a user I want to be able to create an account
+- As a user I want to be able to login to the website
+- As a logged-in user I want to see a list of url’s that I have shortened while logged in
+- As a logged-in user I want to be able to delete a url from the list
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Sprint 2 (bonus) Backlog
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- As a logged-in user I want to see how many times my url’s have been visited
+- As a logged-in user I want to be able to edit my url destinations
+- As a logged-in user I want to be able to specify a second destination where a custom percentage
+- of the traffic will be send to instead of the original destination
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Front end
 
-### `npm run build`
+- GitHub repo : https://github.com/...
+- Server      : https://....
+- Library     : React.js
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Routes
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+- public  : `/`
+- private : `/new-url`
+- public  : `/:short-url-path` => Redirect to destination
+- public  : `/signup`
+- public  : `/login`
+- private : `/my-urls`
+- private : `/my-urls/:id/delete`
+- public  : `/page-not-found`
+- public  : `/server-error`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Components
 
-### `npm run eject`
+- App       : navigation, description
+- Shortener : form (input: 'destination url', button: 'submit'), 'short url'
+- Signup    : form (input: 'username', input: 'password', button: 'submit')
+- Login     : form (input: 'username', input: 'password', button: 'submit')
+- Url-list  : list (listitem: 'destination url', 'short url', button: 'delete')
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Services
+- Auth Service
+  - auth.signup(user)
+  - auth.login(user)
+  - auth.sessionUser()
+  - auth.logout(user)
+- Shortener Service
+  - create(shortUrlPath, destinationUrl, optional:secondDestinationUrl, userId)
+  - find(shortUrl)
+  - update(shortUrl)
+  - delete(shortUrl)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Backend
 
-## Learn More
+- GitHub repo : https://github.com/...
+- Server      : https://...
+- Framework   : Express
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Models
 
-### Code Splitting
+### User model
+```
+{
+  username  : string, required, unique
+  password  : string, required
+  urlIds    : array of objects {url_id: relation_object}
+}
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### Url model
+```
+{
+  shortUrlPath  : string, required, unique
+  destination   : string, required
+  visited       : int
+  userId        : int, required {user_id: relation_object}
+}
+```
 
-### Analyzing the Bundle Size
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## API Endpoints (backend routes)
+### Authorisation
+- `GET: /auth/session-user`
+  - return 404 if no user in session
+  - return 200 with user object
+- `POST: /auth/signup`
+  - check user is not logged in
+  - validation: username and password should not be empty
+  - check if username already exists
+  - create user
+  - store user in session
+  - return user
+- `POST: /auth/login`
+  - check user is not logged in
+  - validation: username and password should not be empty
+  - check if user exists
+  - match password
+  - store user in session
+  - return user
+- `POST: /auth/logout`
+  - check user is logged in
+  - remove user from session
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Shortener
+- `POST: /url/add`
+  - create a short url path and store it's destination Url
+  - return short url path
+- `GET: /url/:path`
+  - get the destination url
+- `GET: /url/list`
+  - get list of url's of the user in session
+- `PUT: /url/:path/:destination`
+  - check if short url belongs to the user in session
+  - update the destination
+- `DELETE: /url/:path`
+  - check if short url belongs to the user in session
+  - delete a url if it belongs to the user in session
