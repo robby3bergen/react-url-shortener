@@ -4,6 +4,9 @@ Url Shortener
 ## Description
 Enter a url and use the result as a short link in your messages. Anyone who uses the short link will be redirected to the original destination.
 
+## Production environment
+- https://artificial-shortener.herokuapp.com
+
 ## User Stories
 
 ### Sprint 1
@@ -25,7 +28,6 @@ Enter a url and use the result as a short link in your messages. Anyone who uses
 # Front end
 
 - GitHub repo : https://github.com/robby3bergen/react-url-shortener
-- Server      : https://....
 - Library     : React.js
 
 ## Routes
@@ -65,7 +67,6 @@ Enter a url and use the result as a short link in your messages. Anyone who uses
 # Backend
 
 - GitHub repo : https://github.com/robby3bergen/express-url-shortener
-- Server      : https://...
 - Framework   : Express
 
 
