@@ -19,7 +19,7 @@ class AuthService {
   }
 
   userLoggedIn = () => {
-    return this.authorise.get('/userLoggedIn')
+    return this.authorise.get('/userloggedin')
     .then(response => response.data)
   }
 }
