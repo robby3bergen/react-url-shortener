@@ -12,6 +12,7 @@ class Shortener extends Component {
   }
 
   handleChange = (event) => {
+    // prevent page refresh
     event.preventDefault();
     
     const {name, value} = event.target;
@@ -19,11 +20,11 @@ class Shortener extends Component {
   }
 
   handleSubmit = (event) => {
+    // prevent page refresh
     event.preventDefault();
 
     // get shortPath from api and store destination url in database
-    const destination = this.state.destination;
-    
+    const destination = this.state.destination;    
     this.shortenService.addUrl(destination)
     .then(response => {
       const url = `http://localhost:5000/${response._id}`;
