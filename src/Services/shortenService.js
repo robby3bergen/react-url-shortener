@@ -3,7 +3,7 @@ import axios from 'axios';
 class ShortenService {
   constructor() {
     this.shorten = axios.create({
-      baseURL: 'http://localhost:5000/url',
+      baseURL: `${process.env.REACT_APP_API_URL}/url`,
       withCredentials: true
     })
   }

@@ -27,7 +27,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Shortener} />
           <Route exact path="/:id" render={(({match}) => {
-            this.redirectToDestination(match.params.id);
+            this.redirectToDestination(match.params.id); // async function, so next statement will execute first!
             return(<Redirect to="/" />);
           })} />
         </Switch>

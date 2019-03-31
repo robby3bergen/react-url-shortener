@@ -27,7 +27,7 @@ class Shortener extends Component {
     const destination = this.state.destination;    
     this.shortenService.addUrl(destination)
     .then(response => {
-      const url = `http://localhost:5000/${response._id}`;
+      const url = `${process.env.REACT_APP_API_URL}/${response._id}`;
       this.setState({shortUrl: url})
     })
     .catch(error => console.log(error))
