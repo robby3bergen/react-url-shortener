@@ -22,6 +22,11 @@ class AuthService {
     return this.authorise.get('/userloggedin')
     .then(response => response.data)
   }
+
+  logout = () => {
+    return this.authorise.post('/logout')
+    .then(response => response.data)
+  }
 }
 
 export default AuthService;

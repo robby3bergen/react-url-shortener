@@ -20,11 +20,8 @@ class App extends Component {
   // check current user in session (only) after page refresh and store in state
   getCurrentUser() {
     if (!this.state.currentUser) {
-      /* console.log('Auth service checking session...'); */
       this.authService.userLoggedIn()
       .then(response => {
-        /* console.log('Current user in session: ');
-        console.log(response); */
         this.setState({currentUser: response.currentUser});
       })
     }
@@ -33,6 +30,15 @@ class App extends Component {
   // function setCurrentUser is passed through props to Signup and Login components and will be called from within those components
   setCurrentUser = (user) => {
     this.setState({currentUser: user});
+  }
+
+  logout = () => {
+    // async function logout, return will be executed first
+    this.authService.logout()
+    .then(response => {
+      this.setState({currentUser: response.currentUser})
+    })
+    return <Redirect to="/" />;
   }
 
   redirectToDestination(id) {
@@ -72,6 +78,7 @@ class App extends Component {
           <Route exact path='/login'>
             {userLoggedIn ? (<Redirect to="/" />) : (<Login setCurrentUser={this.setCurrentUser} />)}
           </Route>
+          <Route exact path='/logout' render={this.logout} />
           <Route exact path="/:id" render={(({match}) => {
             this.redirectToDestination(match.params.id); // async function, so next statement will execute first!
             return(<Redirect to="/" />);
