@@ -6,8 +6,10 @@ import Shortener from './Components/shortener';
 import Signup from './Components/signup';
 import Login from './Components/login';
 
-import ShortenService from './Services/shortenService';
+//import ShortenService from './Services/shortenService';
 import AuthService from './Services/authService';
+
+import PrivateRoute from './Routes/private';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +24,8 @@ class App extends Component {
     if (!this.state.currentUser) {
       this.authService.userLoggedIn()
       .then(response => {
-        this.setState({currentUser: response.currentUser});
+        console.log(response);
+        this.setState({currentUser: response.username});
       })
     }
   }
@@ -36,25 +39,9 @@ class App extends Component {
     // async function logout, return will be executed first
     this.authService.logout()
     .then(response => {
-      this.setState({currentUser: response.currentUser})
+      this.setState({currentUser: response.username})
     })
     return <Redirect to="/" />;
-  }
-
-  redirectToDestination(id) {
-    // get destination url
-    const shortenService = new ShortenService();
-    shortenService.getUrl(id)
-    .then(response => {
-      if ( response === null) {
-        return;
-      } else {
-        // redirect to destination url
-        const destination = response.destination;
-        window.location.href = destination;
-      }
-    })
-    .catch(error => console.log(error));
   }
 
   render() {
@@ -65,24 +52,20 @@ class App extends Component {
         <nav>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/signup">Signup</Link></li>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/logout">Logout</Link></li>
+            {!userLoggedIn ? <li><Link to="/signup">Signup</Link></li> : null}
+            {!userLoggedIn ? <li><Link to="/login">Login</Link></li> : null}
+            {userLoggedIn ? <li><Link to="/logout">Logout</Link></li> : null}
           </ul>
         </nav>
         <Switch>
-          <Route exact path="/" component={Shortener} />
+          <PrivateRoute exact path="/" userLoggedIn={userLoggedIn} component={Shortener} />
           <Route exact path='/signup'>
             {userLoggedIn ? (<Redirect to="/" />) : (<Signup setCurrentUser={this.setCurrentUser} />)}
           </Route>
           <Route exact path='/login'>
-            {userLoggedIn ? (<Redirect to="/" />) : (<Login setCurrentUser={this.setCurrentUser} />)}
+            {userLoggedIn ? (<Redirect to={this.props.location} />) : (<Login setCurrentUser={this.setCurrentUser} />)}
           </Route>
           <Route exact path='/logout' render={this.logout} />
-          <Route exact path="/:id" render={(({match}) => {
-            this.redirectToDestination(match.params.id); // async function, so next statement will execute first!
-            return(<Redirect to="/" />);
-          })} />
         </Switch>
       </div>
     );
