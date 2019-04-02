@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AuthService from '../Services/authService';
 
-class Signup extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +22,7 @@ class Signup extends Component {
     event.preventDefault();
     const {username, password} = this.state;
     
-    this.authService.signup(username, password)
+    this.authService.login(username, password)
     .then(response => {
       // clear username and password in the form
       this.setState({username: '', password: ''});
@@ -42,7 +42,7 @@ class Signup extends Component {
           <input name="username" type="text" placeholder="username" value={this.state.username} onChange={this.handleChange} />
           <label>Password:</label>
           <input name="password" type="password" placeholder="password" value={this.state.password} onChange={this.handleChange} />
-          <input type="submit" value="Signup" />
+          <input type="submit" value="Login" />
         </form>
         <p>{this.state.error}</p>
       </div>
@@ -50,4 +50,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default Login;

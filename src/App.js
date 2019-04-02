@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import './App.css';
 
 import Shortener from './Components/shortener';
 import Signup from './Components/signup';
+import Login from './Components/login';
 
 import ShortenService from './Services/shortenService';
 import AuthService from './Services/authService';
@@ -51,12 +52,25 @@ class App extends Component {
   }
 
   render() {
+    const userLoggedIn = this.state.currentUser;
+
     return (
       <div className="App">
+        <nav>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/signup">Signup</Link></li>
+            <li><Link to="/login">Login</Link></li>
+            <li><Link to="/logout">Logout</Link></li>
+          </ul>
+        </nav>
         <Switch>
           <Route exact path="/" component={Shortener} />
           <Route exact path='/signup'>
-            <Signup setCurrentUser={this.setCurrentUser} />
+            {userLoggedIn ? (<Redirect to="/" />) : (<Signup setCurrentUser={this.setCurrentUser} />)}
+          </Route>
+          <Route exact path='/login'>
+            {userLoggedIn ? (<Redirect to="/" />) : (<Login setCurrentUser={this.setCurrentUser} />)}
           </Route>
           <Route exact path="/:id" render={(({match}) => {
             this.redirectToDestination(match.params.id); // async function, so next statement will execute first!
