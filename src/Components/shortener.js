@@ -24,8 +24,9 @@ class Shortener extends Component {
     event.preventDefault();
 
     // get shortPath from api and store destination url in database
-    const destination = this.state.destination;    
-    this.shortenService.addUrl(destination)
+    const destination = this.state.destination;
+    const userId = this.props.userLoggedIn.userId;
+    this.shortenService.addUrl(destination, userId)
     .then(response => {
       const url = `${process.env.REACT_APP_API_URL}/${response._id}`;
       this.setState({shortUrl: url})
@@ -34,6 +35,7 @@ class Shortener extends Component {
   }
 
   render() {
+    console.log(this.props.userLoggedIn);
     return(
       <div>
         <article>

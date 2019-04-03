@@ -23,23 +23,22 @@ class App extends Component {
   getCurrentUser() {
     if (!this.state.currentUser) {
       this.authService.userLoggedIn()
-      .then(response => {
-        console.log(response);
-        this.setState({currentUser: response.username});
+      .then(currentUser => {
+        this.setState({currentUser});
       })
     }
   }
 
   // function setCurrentUser is passed through props to Signup and Login components and will be called from within those components
-  setCurrentUser = (user) => {
-    this.setState({currentUser: user});
+  setCurrentUser = (currentUser) => {
+    this.setState({currentUser});
   }
 
   logout = () => {
     // async function logout, return will be executed first
     this.authService.logout()
     .then(response => {
-      this.setState({currentUser: response.username})
+      this.setState({currentUser: null})
     })
     return <Redirect to="/" />;
   }

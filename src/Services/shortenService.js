@@ -8,8 +8,8 @@ class ShortenService {
     })
   }
 
-  addUrl = (destination) => {
-    return this.shorten.post('/add', {destination})
+  addUrl = (destination, userId) => {
+    return this.shorten.post('/add', {destination, userId})
     .then(response => response.data)
   }
 
