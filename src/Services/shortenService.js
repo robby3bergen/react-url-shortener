@@ -13,8 +13,13 @@ class ShortenService {
     .then(response => response.data)
   }
 
-  getUrl = (id) => {
+/*   getUrl = (id) => {
     return this.shorten.get(`/findbyid/${id}`)
+    .then(response => response.data)
+  } */
+
+  getListOfUrls = (userId) => {
+    return this.shorten.post('/list', {userId})
     .then(response => response.data)
   }
 }

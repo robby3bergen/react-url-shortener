@@ -53,6 +53,7 @@ class App extends Component {
             <li><Link to="/">Home</Link></li>
             {!userLoggedIn ? <li><Link to="/signup">Signup</Link></li> : null}
             {!userLoggedIn ? <li><Link to="/login">Login</Link></li> : null}
+            {userLoggedIn ? <li><Link to="/list">My shortened urls</Link></li> : null}
             {userLoggedIn ? <li><Link to="/logout">Logout</Link></li> : null}
           </ul>
         </nav>

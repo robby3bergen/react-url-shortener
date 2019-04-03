@@ -35,7 +35,6 @@ class Shortener extends Component {
   }
 
   render() {
-    console.log(this.props.userLoggedIn);
     return(
       <div>
         <article>
