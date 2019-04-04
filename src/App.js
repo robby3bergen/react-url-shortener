@@ -48,7 +48,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <nav>
+        <nav className="nav-header">
           <ul>
             <li><Link to="/">Home</Link></li>
             {!userLoggedIn ? <li><Link to="/signup">Signup</Link></li> : null}
@@ -57,16 +57,18 @@ class App extends Component {
             {userLoggedIn ? <li><Link to="/logout">Logout</Link></li> : null}
           </ul>
         </nav>
-        <Switch>
-          <PrivateRoute exact path="/" userLoggedIn={userLoggedIn} component={Shortener} />
-          <Route exact path='/signup'>
-            {userLoggedIn ? (<Redirect to="/" />) : (<Signup setCurrentUser={this.setCurrentUser} />)}
-          </Route>
-          <Route exact path='/login'>
-            {userLoggedIn ? (<Redirect to={this.props.location} />) : (<Login setCurrentUser={this.setCurrentUser} />)}
-          </Route>
-          <Route exact path='/logout' render={this.logout} />
-        </Switch>
+        <div className="container">
+          <Switch>
+            <PrivateRoute exact path="/" userLoggedIn={userLoggedIn} component={Shortener} />
+            <Route exact path='/signup'>
+              {userLoggedIn ? (<Redirect to="/" />) : (<Signup setCurrentUser={this.setCurrentUser} />)}
+            </Route>
+            <Route exact path='/login'>
+              {userLoggedIn ? (<Redirect to={this.props.location} />) : (<Login setCurrentUser={this.setCurrentUser} />)}
+            </Route>
+            <Route exact path='/logout' render={this.logout} />
+          </Switch>
+        </div>
       </div>
     );
   }
