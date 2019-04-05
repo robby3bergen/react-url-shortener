@@ -5,6 +5,7 @@ import './App.css';
 import Shortener from './Components/shortener';
 import Signup from './Components/signup';
 import Login from './Components/login';
+import UrlList from './Components/list';
 
 //import ShortenService from './Services/shortenService';
 import AuthService from './Services/authService';
@@ -60,6 +61,7 @@ class App extends Component {
         <div className="container">
           <Switch>
             <PrivateRoute exact path="/" userLoggedIn={userLoggedIn} component={Shortener} />
+            <PrivateRoute exact path="/list" userLoggedIn={userLoggedIn} component={UrlList} />
             <Route exact path='/signup'>
               {userLoggedIn ? (<Redirect to="/" />) : (<Signup setCurrentUser={this.setCurrentUser} />)}
             </Route>
