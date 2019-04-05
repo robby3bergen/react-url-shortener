@@ -35,7 +35,7 @@
 .nav-header {
   position: fixed;
   width: 100%;
-  background-color: darkblue;
+  background-color: #03034e;
 }
 
 .nav-header ul {
@@ -58,17 +58,22 @@
   color: white;
 }
 
-.container {
+.auth {
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.container * {
+.auth * {
   width: 90%;
   margin: 5px auto;
   line-height: 20px;
+}
+
+.main {
+  position: relative;
+  top: 100px;
 }
 
 h1 {
@@ -79,12 +84,27 @@ input[type="text"], input[type="password"] {
   border: 1px ridge lightgrey;
 }
 
-input.submit {
+input[type="submit"] {
   height: 40px;
-  background-color: darkblue;
+  background-color: #03034e;
   border: none;
+  outline: none;
   border-radius: 5px;
   color: white;
+}
+
+input[type="submit"]:hover {
+  background-color: #444454;
+}
+
+.main li {
+  list-style: none;
+}
+
+input#destination {
+  width: 500px;
+  max-width: 100%;
+  line-height: 35px;
 }
 
 @media (min-width: 992px) {
@@ -97,7 +117,7 @@ input.submit {
     margin-right: 10px;
   }
 
-  .container {
+  .auth {
     width: 40%;
     margin: 0 auto;
   }

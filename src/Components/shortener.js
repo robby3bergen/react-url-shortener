@@ -36,11 +36,11 @@ class Shortener extends Component {
 
   render() {
     return(
-      <div>
+      <div className="main">
         <h1>Url Shortener</h1>
         <form onSubmit={this.handleSubmit}>
-          <input name="destination" type="text" onChange={this.handleChange} value={this.state.destination} placeholder="type or paste your url here" />
-          <input className="submit" type="submit" value="Get short url" />
+          <input id="destination" name="destination" type="text" onChange={this.handleChange} value={this.state.destination} placeholder="type or paste your url here" />
+          <input type="submit" value="Get short url" />
         </form>
         <p>The following short url was created for you</p>
         <p>{this.state.shortUrl}</p>
